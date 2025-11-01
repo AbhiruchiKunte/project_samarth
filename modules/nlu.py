@@ -75,21 +75,29 @@ class NLUEngine:
         """Extract crop names from query"""
         found_crops = []
         
+        # Find exact matches first
         for crop in self.crops:
-            if crop in query:
+            if re.search(r'\b' + re.escape(crop) + r'\b', query):
                 found_crops.append(crop)
         
-        # Handle plural forms
+        # Handle plural forms and categories
         crop_variants = {
             'crops': self.crops,
             'grains': ['rice', 'wheat', 'jowar', 'bajra', 'maize'],
             'pulses': ['gram', 'tur', 'urad', 'moong'],
-            'oilseeds': ['groundnut', 'sesamum', 'rapeseed', 'linseed', 'castorseed']
+            'oilseeds': ['groundnut', 'sesamum', 'rapeseed', 'linseed', 'castor'],
+            'wheat': ['wheat'], # Explicit check as it's common
+            'rice': ['rice'] # Explicit check as it's common
         }
         
-        for variant, crop_list in crop_variants.items():
-            if variant in query and not found_crops:
-                return crop_list[:5]  # Return top 5 from category
+        # If no specific crop found, look for general categories
+        if not found_crops:
+            for variant, crop_list in crop_variants.items():
+                if variant in query:
+                    # Prefer exact crop matches over categories, otherwise return one specific crop or top 5 from category
+                    if variant in ['wheat', 'rice']:
+                        return crop_list
+                    return crop_list[:2] 
         
         return found_crops
     
