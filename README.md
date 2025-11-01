@@ -27,7 +27,7 @@ The application uses open data resources provided by the Government of India via
 * **Rainfall Data Source:** Daily district-wise rainfall data.
 * **Crop Data Source:** State/UT-wise production of principal crops (e.g., 2009-10 to 2015-16 data is expected based on the links in `data_service.py`).
 
-Results are based on the latest available data in the specified resource files (the code notes that crop data is currently up to ~2015/2016).*
+*Results are based on the latest available data in the specified resource files (the code notes that crop data is currently up to ~2015/2016).*
 
 ---
 ## 🚀 Live Demo
