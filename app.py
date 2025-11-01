@@ -2,7 +2,6 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-# Note: data_service.py must still contain 'import streamlit as st' for @st.cache_data to work.
 from data_service import compare_average_rainfall, top_crops_in_state
 
 def apply_custom_css():
@@ -78,7 +77,6 @@ def apply_custom_css():
             background-color: white !important;
         }}
 
-        /* Keep same border color always */
         .stTextInput div[data-baseweb="input"]:focus-within,
         .stTextInput div[data-baseweb="input"]:hover,
         [data-testid="stNumberInput"] div[data-baseweb="input"]:focus-within,
@@ -87,12 +85,10 @@ def apply_custom_css():
             box-shadow: none !important;
         }}
 
-        /* Remove center divider line between number and +/- buttons */
         [data-testid="stNumberInput"] div[data-baseweb="input"] > div:first-child {{
             border-right: none !important;
         }}
 
-        /* Make +/- buttons blend in naturally inside the box */
         [data-testid="stNumberInput"] button {{
             border: none !important;
             background: transparent !important;
@@ -104,12 +100,10 @@ def apply_custom_css():
             color: {ORANGE_BORDER} !important;
         }}
 
-        /* Keep the +/- buttons inline without splitting border */
         [data-testid="stNumberInput"] > div {{
             border: none !important;
         }}
 
-        /* -------------------- HIDE SIDEBAR -------------------- */
         [data-testid="stSidebar"],
         [data-testid="stSidebarContent"] {{
             display: none !important;
@@ -118,8 +112,6 @@ def apply_custom_css():
         """,
         unsafe_allow_html=True
     )
-
-
 
 # --- PLOTTING FUNCTIONS ---
 
@@ -202,7 +194,6 @@ def display_rainfall_results(res):
     avg_x = res['avg_rainfall_x']
     avg_y = res['avg_rainfall_y']
 
-    # Calculate Delta Safely
     delta_x, delta_y = None, None
     delta_color_x, delta_color_y = "off", "off"
     
@@ -291,7 +282,6 @@ st.set_page_config(page_title="Project Samarth - Live Q&A", layout='wide')
 st.title("🌾 Project Samarth: Agricultural Data Insights")
 st.markdown("### Powered by Data from data.gov.in")
 
-# Use tabs for a cleaner, more organized interface
 tab1, tab2 = st.tabs(["💧 Rainfall Comparison", "🌱 Crop Production Ranking"])
 
 with tab1:
@@ -319,7 +309,6 @@ with tab1:
             else:
                 st.warning("Please provide valid inputs for both states and number of years.")
 
-
 with tab2:
     st.header("Top Crops by Production 📈")
     with st.container(border=True):
@@ -344,7 +333,6 @@ with tab2:
                     display_crop_results(res)
             else:
                 st.warning("Please provide valid inputs for state, top crops, and number of years.")
-
 
 st.markdown("---")
 st.caption("Disclaimer: Data is sourced from data.gov.in. Results are based on the latest available data in the specified resource files (currently up to ~2015/2016 for crop data).")
